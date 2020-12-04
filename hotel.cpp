@@ -3,14 +3,14 @@
 #include <string>
 
 
-Hotel::Hotel(string id, string nom, string ville, vector<Chambre> list){
+Hotel::Hotel(int id, string nom, string ville, vector<Chambre> list){
     _id = id;
     _nom = nom;
     _ville = ville;
     _list = list;
 }
 
-string Hotel::getid()
+int Hotel::getid()
 {
 return _id;
 }

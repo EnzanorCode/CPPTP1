@@ -5,13 +5,13 @@
 #include <vector>
 
 using namespace std;
-using namespace CHAMBRE;
+
 
 class Hotel{
 
 public:
-Hotel(string id, string nom, string ville, vector<Chambre> list);
-string getid();
+Hotel(int id, string nom, string ville, vector<Chambre> list);
+int getid();
 string getnom();
 string getville();
 vector<Chambre> getlist();
@@ -20,7 +20,7 @@ void ajouterChambre(Chambre chambre);
 
 private:
 
-string _id;
+int _id;
 string _nom;
 string _ville;
 vector<Chambre> _list;

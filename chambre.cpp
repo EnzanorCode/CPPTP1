@@ -3,7 +3,6 @@
 #include <string>
 
 using namespace std;
-namespace CHAMBRE{
 
 Chambre::Chambre(int id, Type type, int prix){
     _id = id;
@@ -39,4 +38,3 @@ void Chambre::setprix(int prix){
     _prix = prix;
 
 }
-}//FIN namespace

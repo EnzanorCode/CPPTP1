@@ -3,7 +3,7 @@
 #include <string>
 
 using namespace std; 
-namespace CHAMBRE{
+
 
 enum class Type {SIMPLE, DOUBLE, SUITE};
 
@@ -27,6 +27,6 @@ Type _type;
 int _prix;
 
 };
-}
+
 
 #endif 

@@ -5,31 +5,46 @@
  * @Email:  dginhac@u-bourgogne.fr
  * @Project: C++ Programming - ESIREM 3A IT
  * @Last modified by:   d0m
- * @Last modified time: 2020-09-23T11:39:17+02:00
+ * @Last modified time: 2020-09-22T23:16:23+02:00
  */
 
 #ifndef DATE_H
 #define DATE_H
 #include <string>
-#include <iostream>
 #include <cassert>
-class Date {
-public:
-   Date (int month, int day, int year);
-   Date() = default;
-   int getMonth() const;
-   int getDay() const;
-   int getYear() const;
-   int month();
-   bool checkDate(int month, int day) const;
-   Date nextDay();
-   void setMonth(int month);
-   void setDay(int day);
-   void setYear(int year);
-   std::string toString();
-private:
-   int _month;
-   int _day;
-   int _year;
-};
+#include <iostream>
+
+namespace date {
+   class Date {
+   private:
+      int _year;
+      int _month;
+      int _day;
+   public:
+      Date (int year, int month, int day);
+      Date() = default;
+      ~Date();
+      int year() const;
+      int month() const;
+      int day() const;
+      bool checkDate(int year, int month, int day);
+      void setYear(int year);
+      void setMonth(int month);
+      void setDay(int day);
+      void nextDay();
+      std::string toString() const;
+      bool annebissextile();
+      int dayindate();
+   };
+
+   bool operator == (const Date& d1, const Date& d2); // comparison operators
+   bool operator != (const Date& d1, const Date& d2);
+   bool operator < (const Date& d1, const Date& d2);
+   bool operator > (const Date& d1, const Date& d2);
+   bool operator <= (const Date& d1, const Date& d2);
+   bool operator >= (const Date& d1, const Date& d2);
+   int operator -(Date& d1, Date& d2);
+
+
+}
 #endif // DATE_H
