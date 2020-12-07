@@ -10,7 +10,7 @@
 
 #include "date.h"
 
-
+using namespace std;
 
 namespace date {
 
@@ -110,8 +110,8 @@ namespace date {
 			_day+=1;
 		}
 	}
-    bool Date::annebissextile(){
-		if ((_year%4 == 0) || ((_year%100==0) && (_year%400 == 0))) {
+    bool Date::annebissextile(int year){
+		if ((year%4 == 0) || ((year%100==0) && (year%400 == 0))) {
 				return 1;
 			}
 		else {
@@ -121,79 +121,82 @@ namespace date {
 	int Date::dayindate() {
 		int jour = 0;
 		for (int i=0; i<year()-1 ; i++) {
-			if (annebissextile() == 1){
+			cout << jour << endl;
+			if (annebissextile(i) == 1){
 				jour += 366;
 			}
-			if (annebissextile() == 0){
+			if (annebissextile(i) == 0){
 				jour += 365;
 			}
 		}
+		
 			if(month() == 1 ){
-				jour += day() ;
+				jour = jour + day() ;
 			}
 			if(month() == 2 ){
 				jour= jour + 31 + day();
 			}
 			if(month() == 3 ){
-				if (annebissextile() == 1 )
+				if (annebissextile(_year) == 1 )
 				jour = jour + 60 + day();
-				if (annebissextile() == 0)
+				if (annebissextile(_year) == 0)
 				jour = jour + 59 + day();
 			}
 			if(month() == 4 ){
-				if (annebissextile() == 1 )
+				if (annebissextile(_year) == 1 )
 				jour = jour + 91 + day();
-				if (annebissextile() == 0)
+				if (annebissextile(_year) == 0)
 				jour = jour + 90 + day();
 			}
 			if(month() == 5 ){
-				if (annebissextile() == 1 )
+				if (annebissextile(_year) == 1 )
 				jour = jour + 121 + day();
-				if (annebissextile() == 0)
+				if (annebissextile(_year) == 0)
 				jour = jour + 120 + day();
 			}
 			if(month() == 6 ){
-				if (annebissextile() == 1 )
+				if (annebissextile(_year) == 1 )
 				jour = jour + 152 + day();
-				if (annebissextile() == 0)
+				if (annebissextile(_year) == 0)
 				jour = jour + 151 + day();
 			}
 			if(month() == 7 ){
-				if (annebissextile() == 1 )
+				if (annebissextile(_year) == 1 )
 				jour = jour + 182 + day();
-				if (annebissextile() == 0)
+				if (annebissextile(_year) == 0)
 				jour = jour + 181 + day();
 			}
 			if(month() == 8 ){
-				if (annebissextile() == 1 )
+				if (annebissextile(_year) == 1 )
 				jour = jour + 213 + day();
-				if (annebissextile() == 0)
+				if (annebissextile(_year) == 0)
 				jour = jour + 212 + day();
 			}
 			if(month() == 9 ){
-				if (annebissextile() == 1 )
+				if (annebissextile(_year) == 1 )
 				jour = jour + 244 + day();
-				if (annebissextile() == 0)
+				if (annebissextile(_year) == 0)
 				jour = jour + 243 + day();
 			}
 			if(month() == 10 ){
-				if (annebissextile() == 1 )
+				if (annebissextile(_year) == 1 )
 				jour = jour + 274 + day();
-				if (annebissextile() == 0)
+				if (annebissextile(_year) == 0)
 				jour = jour + 273 + day();
 			}
 			if(month() == 11 ){
-				if (annebissextile() == 1 )
+				if (annebissextile(_year) == 1 )
 				jour = jour + 305 + day();
-				if (annebissextile() == 0)
+				if (annebissextile(_year) == 0)
 				jour = jour + 304 + day();
 			}
 			if(month() == 12 ){
-				if (annebissextile() == 1 )
+				if (annebissextile(_year) == 1 )
 				jour = jour + 335 + day();
-				if (annebissextile() == 0)
+				if (annebissextile(_year) == 0)
 				jour = jour + 334 + day();
 			}
+		
 
 	return jour;
 

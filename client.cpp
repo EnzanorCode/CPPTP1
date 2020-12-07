@@ -38,5 +38,8 @@ using namespace std;
     void Client::setreservation(int reservation){
         _reservation = reservation;
     }
-
-
+    ostream& operator << (ostream& os, Client& c1) {
+    string b ="info client => | id : " + to_string(c1.getid()) + " | nom : " + c1.getnom() + " | prenom : " + c1.getprenom() + " | Nombre de reservation : " + to_string(c1.getreservation());
+    os << b << endl; 
+    return os;
+    }

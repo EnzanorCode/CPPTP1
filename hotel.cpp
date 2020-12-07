@@ -33,3 +33,12 @@ void Hotel::ajouterChambre(Chambre chambre)
 {
     _list.push_back(chambre);
 }
+
+ostream& operator << (ostream& os, Hotel& h1){
+    string b ="info hotel => | id : " + to_string(h1.getid()) + " | Nom : " + h1.getnom() + " | ville : " + h1.getville() + " | list chambre : ";
+    os << b << endl;
+     for(int i = 0 ; i < h1.getlist().size() ; i++){
+        os << h1.getlist()[i];
+    }
+    return os;
+}

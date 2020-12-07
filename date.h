@@ -33,7 +33,7 @@ namespace date {
       void setDay(int day);
       void nextDay();
       std::string toString() const;
-      bool annebissextile();
+      bool annebissextile(int year);
       int dayindate();
    };
 

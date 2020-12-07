@@ -28,7 +28,8 @@ class reservation {
     int getidclient() const;
     void ModifierDateSejour(Date datedebut, Date datefin);
     int prix();
-
+    int duresejour();
+    int montantsejour();
 
     private :
     int _idreservation;

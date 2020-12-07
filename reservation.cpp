@@ -59,3 +59,12 @@ int reservation::prix(){
 int nombrejour = _datedebut - _datefin;
 return (nombrejour*_prix);
 }
+int reservation::duresejour(){
+int a = _datefin.dayindate() - _datedebut.dayindate();
+return a;
+}
+int reservation::montantsejour(){
+    int a = _datefin.dayindate() - _datedebut.dayindate();
+    a = a*_prix;
+    return a;
+}

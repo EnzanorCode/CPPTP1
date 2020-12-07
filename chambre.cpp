@@ -38,3 +38,9 @@ void Chambre::setprix(int prix){
     _prix = prix;
 
 }
+
+ostream& operator << (ostream& os, Chambre& c1) {
+    string b ="info chambre => | id : " + to_string(c1.getid()) + " | Type : " + c1.gettype() + " | prix : " + to_string(c1.getprix());
+    os << b << endl; 
+    return os;
+}

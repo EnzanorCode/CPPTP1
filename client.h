@@ -29,5 +29,6 @@ class Client{
     int _id;
 
 };
+ostream& operator << (ostream& os, Client& c1);
 
 #endif 

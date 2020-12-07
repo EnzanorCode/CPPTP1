@@ -20,6 +20,7 @@ void settype(Type type);
 void setprix(int prix);
 
 
+
 private:
 
 int _id;
@@ -27,6 +28,8 @@ Type _type;
 int _prix;
 
 };
+
+ostream& operator << (ostream& os, Chambre& c1);
 
 
 #endif 

@@ -28,4 +28,6 @@ vector<Chambre> _list;
 
 };
 
+ostream& operator << (ostream& os, Hotel& h1);
+
 #endif 
