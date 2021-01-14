@@ -120,8 +120,8 @@ namespace date {
 	}
 	int Date::dayindate() {
 		int jour = 0;
-		for (int i=0; i<year()-1 ; i++) {
-			cout << jour << endl;
+		for (int i=0; i<year() ; i++) {
+
 			if (annebissextile(i) == 1){
 				jour += 366;
 			}
@@ -262,12 +262,16 @@ namespace date {
 		}
 		return (d1>d2);
 	}
-	int operator -(Date& d1, Date& d2) {
-		if (d1<d2){
+	
+	int operator -(Date& d1, Date& d2) 
+	{
+		if (d1>d2){
 			return (d1.dayindate() - d2.dayindate()); 		
 		}
 		else {
-			return (d2.dayindate() - d1.dayindate());
+			cout << "erreur mauvaise date" << endl;
+			return 0;
 		}
 	}
+	
 }

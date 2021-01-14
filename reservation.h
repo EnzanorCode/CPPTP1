@@ -40,5 +40,6 @@ class reservation {
     int _prix;
     int _idclient;
 };
+ostream& operator << (ostream& os, reservation& r1);
 
 #endif

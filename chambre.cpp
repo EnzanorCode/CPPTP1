@@ -13,6 +13,14 @@ Chambre::Chambre(int id, Type type, int prix){
 int Chambre::getid() const{
         return _id;
     }
+
+vector<Date> Chambre::getdisponibilite() const{
+        return _disponibilite;
+    }
+void Chambre::ajouterdisponibilite(Date date){
+    _disponibilite.push_back(date);
+}
+
 void Chambre::setid(int id){
     _id = id;
 }

@@ -3,7 +3,9 @@
 
 
 
-reservation::reservation(int idreservation, Date datedebut, Date datefin, Hotel hotel, Chambre chambre, Client client) {
+
+reservation::reservation(int idreservation, Date datedebut, Date datefin, Hotel hotel, Chambre chambre, Client client) 
+{
     _idreservation = idreservation;
     _datedebut = datedebut;
     _datefin = datefin;
@@ -12,6 +14,13 @@ reservation::reservation(int idreservation, Date datedebut, Date datefin, Hotel 
     _prix = chambre.getprix();
     _idclient = client.getid();
     
+   
+        
+    for(int i=0; i < (datefin - datedebut);i++ ) 
+    {
+        chambre.ajouterdisponibilite(datedebut);
+        datedebut.nextDay();
+    }
 
 }
 void reservation::setid(int idreservation){
@@ -60,11 +69,18 @@ int nombrejour = _datedebut - _datefin;
 return (nombrejour*_prix);
 }
 int reservation::duresejour(){
-int a = _datefin.dayindate() - _datedebut.dayindate();
+int a = _datefin - _datedebut;
 return a;
 }
 int reservation::montantsejour(){
-    int a = _datefin.dayindate() - _datedebut.dayindate();
+    int a = _datefin - _datedebut;
     a = a*_prix;
     return a;
 }
+  ostream& operator << (ostream& os, reservation& r1) {
+    string b ="info reservation => | id : " + to_string(r1.getid()) + " | date de debut de sejour : " + r1.getdatedebut().toString() + " | date de fin de sejour : " + r1.getdatefin().toString() + " | id Hotel : " + to_string(r1.getidhotel()) + " | id Chambre : " + to_string(r1.getidchambre()) + " | id Client : " +  to_string(r1.getidclient()) + " | Montant sejour : " + to_string(r1.montantsejour()) ;
+    os << b << endl; 
+    return os;
+}
+
+ 

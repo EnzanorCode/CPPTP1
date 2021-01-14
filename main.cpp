@@ -5,13 +5,118 @@
 #include "chambre.h"
 #include "hotel.h"
 #include "reservation.h"
+#include <vector>
 
 using namespace std;
 using namespace date;
 
+Client afficherclient(vector<Client> listeclient) //9)b
+{
+	vector<Client> nompotentiel;
+	string nomclient = ""; 
+	cin >> nomclient;
+	for (int i=0; i<listeclient.size(); i++)
+	{
+		if (listeclient[i].getnom() == nomclient)
+		{
+			nompotentiel.push_back(listeclient[i]);
+		}
+	}
+	int compteur = 0 ;
+	for (int i = 0; i < nompotentiel.size() ; i++ )
+	{
+		cout << nompotentiel[i] << endl;
+		compteur++;
+	}
+	if(compteur == 0)
+	{
+		cout << "Aucun nom ne correspond veuillez reessayer" << endl;
+		return afficherclient(listeclient); 
+	}
+	else if (compteur == 1 )
+	{
+		return nompotentiel.at(0);
+	}
+	else
+	{
+		int id = 0 ;
+		cout << "veuillez choisir l'id du client : " << endl;
+		cin >> id;
+		for (int i = 0; i < nompotentiel.size() ; i++ )
+		{
+			if(nompotentiel.at(i).getid() == id )
+			{ 
+				return nompotentiel.at(i);
+			}
+		}
+	}
+	
+
+}
 
 
-reservation ajouterreservation(int idreservation,Hotel hotel, Chambre chambre, Client client){
+Chambre chambredisponible(Date datedebut,Date datefin,Hotel hotel) //8)a
+{	
+	Date dateinitiale(0,1,1);
+	vector<Date> sejour;
+	sejour.push_back(dateinitiale);
+	for (int i=0; i < (datedebut - datefin) ; i++)
+	{
+		sejour.push_back(datedebut);
+		datedebut.nextDay();
+	}
+	string typechambre = ""; 
+	cout << "enter le type de chambre que vous voulez" << endl; 
+	cin >> typechambre;
+	for (int i=0 ; i < hotel.getlist().size() ; i++ )
+		{
+			if(typechambre == hotel.getlist().at(i).gettype())
+			{
+				for(int k=0 ; k< sejour.size() ; k++)
+				{	
+					if(hotel.getlist().at(i).getdisponibilite().size() != 0 ) 
+					{
+						for(int j=0 ; j< hotel.getlist().at(i).getdisponibilite().size(); j++)
+						{ 
+							if( sejour[k] == hotel.getlist().at(i).getdisponibilite().at(j))
+							{		
+							}
+							else
+							{
+								cout << "date de sejour est possible, pour ce type de chambre" << endl;
+								return hotel.getlist().at(i); 
+							}
+						}
+					}
+					else
+					{
+						cout <<" chambre disponible: "<< hotel.getlist().at(i).getid()  << endl; //(cas ou la table reservation de la chambre est vide)
+						return  hotel.getlist().at(i);
+					}
+					
+				}
+			}
+			
+		}
+
+	cout << " pas de chambre de ce type disponible " << endl;  //8)c
+	return chambredisponible(datedebut,datefin,hotel);
+		
+	
+}
+
+
+
+int nombrenuitsejour(reservation reserv) //7)b
+{ 
+	Date d1 = reserv.getdatedebut();
+	Date d2 = reserv.getdatefin();
+	int c = d2 - d1;  
+	return c;
+}
+
+reservation ajouterreservation(int idreservation,Hotel hotel, Chambre chambre, Client client) //7)a
+{ 
 	int jourdebut;
 	int moisdebut;
 	int annedebut;
@@ -22,56 +127,43 @@ reservation ajouterreservation(int idreservation,Hotel hotel, Chambre chambre, C
 	cin >> jourdebut;
 	cout << "entrer le mois du debut du sejour" << endl;
 	cin >> moisdebut;
-	cout << "entrer l'année du debut du sejour" << endl;
+	cout << "entrer l'annee du debut du sejour" << endl;
 	cin >> annedebut;
 	cout << "entrer le jour de fin du sejour" << endl;
 	cin >> jourfin;
 	cout << "entrer le mois de fin du sejour" << endl;
 	cin >> moisfin;
-	cout << "entrer l'année de fin du sejour" << endl;
+	cout << "entrer l'annee de fin du sejour" << endl;
 	cin >> annefin;
-	
 	Date datedebut(annedebut,moisdebut,jourdebut);
 	Date datefin(annefin,moisfin,jourfin);
-	if ((datefin.dayindate() - datedebut.dayindate()) > 0 ){
-	reservation reservation(idreservation,datedebut,datefin,hotel,chambre,client);
-	return reservation;
-	}
-	else{
-		Chambre chambre(0, Type::SIMPLE, 100);
-		reservation reservation(-1,datedebut,datefin,hotel,chambre,client);
+	if ((datefin.dayindate() - datedebut.dayindate()) > 0 )
+		{
+		reservation reservation(idreservation,datedebut,datefin,hotel,chambre,client);
+		cout << "reservation bien enregistree, nombre de nuit reservee : " <<  nombrenuitsejour(reservation) <<endl;
 		return reservation;
-	}
+		}
+	else
+		{
+		Chambre chambre(0, Type::SIMPLE, 100);
+		reservation reservation(-1,datedebut,datefin,hotel,chambre,client); // si id vaut -1 alors erreur
+		return reservation;
+		}
 	
 }
- int nombrenuitsejour(reservation reserv){
-	Date d1 = reserv.getdatedebut();
-	Date d2 = reserv.getdatefin();
-	int c = d2.dayindate() - d1.dayindate();  
-	if(c <=0 ){
-
-	}
-	else
-	{
-		return c;
-	}
-	
- }
-
-
-
-
 
 int main(){
 
+
+//  QUESTION 1 //////////////////////////////////////////////////////////////TEST DE DATE////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*
-//////////////////////////////////////////////////////////////////////TEST DE DATE////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-Date d1(12,25);
+Date d1(2019,12,24);
 cout << "la date est : " << d1.toString() << endl;
-cout << "le mois : " << d1.getMonth() << endl;
-cout << "le jour : " << d1.getDay() << endl;
+cout << "la date  : "<< d1.day() << " / " << d1.month()  << " / " << d1.year() << endl;
+
 
 //////////////////////////////////////////////////////////////////////test client/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 string nom = "Andres";
 string prenom = "Robert";
 Client c1(01,nom,prenom,46);
@@ -128,100 +220,146 @@ cout << hotel.getlist().at(1).get() << endl;
  cout << d1.toString()<< endl;
 //////////////////////////////////////////////////////////////////////////////Classe reservation ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	Client client0(1,"nom1","prenom1",0);
-	Chambre ChambreSimple10(100, Type::SIMPLE, 100);
-	vector<Chambre> list;
-	list.push_back(ChambreSimple10);
-	Hotel hotel1(1,"hotel1","ville1",list);
-	Date d1(2015,7,10);
-	Date d2(2015,8,9);
-	reservation reservation1(1,d1,d2,hotel1, ChambreSimple10,client0);
+Client client0(1,"nom1","prenom1",0);
+Chambre ChambreSimple10(100, Type::SIMPLE, 100);
+vector<Chambre> list;
+list.push_back(ChambreSimple10);
+Hotel hotel1(1,"hotel1","ville1",list);
+Date d1(2015,7,10);
+Date d2(2015,8,9);
+reservation reservation1(1,d1,d2,hotel1, ChambreSimple10,client0);
 	
-	cout << "duree du sejour : " << reservation1.duresejour() << endl;
-	cout << "montant du sejour : " << reservation1.montantsejour() << endl;
+cout << "duree du sejour : " << reservation1.duresejour() << endl;
+cout << "montant du sejour : " << reservation1.montantsejour() << endl;
 	
+
+//Question 6/a)
+	*/
+Chambre ChambreSimple1(100, Type::SIMPLE, 100);
+Chambre ChambreSimple2(101, Type::SIMPLE, 100);
+Chambre ChambreSimple3(102, Type::SIMPLE, 100);
+	
+Chambre ChambreDouble1(103, Type::DOUBLE, 125);
+Chambre ChambreDouble2(104, Type::DOUBLE, 125);
+Chambre ChambreDouble3(105, Type::DOUBLE, 125);
+Chambre ChambreDouble4(106, Type::DOUBLE, 125);
+Chambre ChambreDouble5(107, Type::DOUBLE, 125);
+
+Chambre ChambreSuite1(108, Type::SUITE, 210);
+Chambre ChambreSuite2(109, Type::SUITE, 210);
+
+vector<Chambre> ListChambre;
+
+
+Hotel hotel(1,"hotel1","ville1",ListChambre);
+	
+hotel.ajouterChambre(ChambreSimple1);
+hotel.ajouterChambre(ChambreSimple2);
+hotel.ajouterChambre(ChambreSimple3);
+hotel.ajouterChambre(ChambreDouble1);
+hotel.ajouterChambre(ChambreDouble2);
+hotel.ajouterChambre(ChambreDouble3);
+hotel.ajouterChambre(ChambreDouble4);
+hotel.ajouterChambre(ChambreDouble5);
+hotel.ajouterChambre(ChambreSuite1);
+hotel.ajouterChambre(ChambreSuite2);
+
+//Question 6.b)
+	
+//cout << ChambreSimple1;
+//cout << hotel;
+
+//Questtion 6.c)
+vector<Client> listClient;
+	
+Client client1(1,"nom1","prenom1",0);
+Client client2(2,"nom2","prenom2",0);
+Client client3(3,"nom3","prenom3",0);
+Client client4(4,"nom4","prenom4",0);
+Client client5(5,"nom5","prenom5",0);
+Client client6(6,"nom6","prenom6",0);
+Client client7(7,"nom9","prenom7",0);
+Client client8(8,"nom9","prenom8",0);
+Client client9(9,"nom9","prenom9",0);
+Client client10(10,"nom10","prenom10",0);
+
+listClient.push_back(client1);
+listClient.push_back(client2);
+listClient.push_back(client3);
+listClient.push_back(client4);
+listClient.push_back(client5);
+listClient.push_back(client6);
+listClient.push_back(client7);
+listClient.push_back(client8);
+listClient.push_back(client9);
+listClient.push_back(client10);
+	
+// << client1;
+
+/*
+//Question 6.b)
+for(int i = 0 ; i < listClient.size() ; i++)
+	{                                                 
+cout << listClient[i];
+    }
+	
+*/
+//7 a)
+/*
+vector<reservation> listreservation;
+reservation newreserv = ajouterreservation(1,hotel,ChambreSimple1,client1);
+
+if (newreserv.getidchambre() == -1)
+	{ // si l'id de la chambre est 0 alors on n'ajoute pas la reservation a la liste des reservation, car aucune chambre ne peut avoir -1 en id dans mon progamme, de cette maniere si la date n'est pas valide, je place dans la reservation un -1 en id chambre qui me premet de detecter l'ereur
+		return 0;
+	}
+	else {
+		listreservation.push_back(newreserv);
+		cout << "La chambre avec l'id " <<  listreservation[0].getid() << " a bien ete ajoute ";   //verification de l'ajout de la reservation dans le vect 
+	}
+
+	
+	//7 b) Test de la fonction Nombre nuit sejour 
+if (nombrenuitsejour(newreserv)==0){return 0;}
+cout << "Voici le nombre de nuit votre reservation : " << endl;
+cout << nombrenuitsejour(newreserv) << endl;
 
 
 */
 
-
-	//Question 6/a)
-	Chambre ChambreSimple1(100, Type::SIMPLE, 100);
-	Chambre ChambreSimple2(101, Type::SIMPLE, 100);
-	Chambre ChambreSimple3(102, Type::SIMPLE, 100);
+	//8.a,b,c) verif
+Date datedebut(2020,1,14);
+Date datefin(2020,1,17);
+chambredisponible(datedebut,datefin,hotel);
 	
-	Chambre ChambreDouble1(103, Type::DOUBLE, 125);
-	Chambre ChambreDouble2(104, Type::DOUBLE, 125);
-	Chambre ChambreDouble3(105, Type::DOUBLE, 125);
-	Chambre ChambreDouble4(106, Type::DOUBLE, 125);
-	Chambre ChambreDouble5(107, Type::DOUBLE, 125);
+   //9a,b,c) verif
 
-	Chambre ChambreSuite1(108, Type::SUITE, 210);
-	Chambre ChambreSuite2(109, Type::SUITE, 210);
+Client c1 = afficherclient(listClient);
+cout <<"le client selectionne est : "<< c1 << endl;
 
-	vector<Chambre> ListChambre;
-
-	Hotel hotel(1,"hotel1","ville1",ListChambre);
+	//10
+	Date datedebut1(2021,1,1);
+	Date datedebut2(2021,2,1);
+	Date datedebut3(2021,3,1); 
+	Date datedebut4(2021,2,1);
+	Date datedebut5(2021,3,1);
+	Date datefin1(2021,1,3);
+	Date datefin2(2021,2,3);
+	Date datefin3(2021,3,3);
+	Date datefin4(2021,2,3);
+	Date datefin5(2021,3,3);
 	
-	hotel.ajouterChambre(ChambreSimple1);
-	hotel.ajouterChambre(ChambreSimple2);
-	hotel.ajouterChambre(ChambreSimple3);
-	hotel.ajouterChambre(ChambreDouble1);
-	hotel.ajouterChambre(ChambreDouble2);
-	hotel.ajouterChambre(ChambreDouble3);
-	hotel.ajouterChambre(ChambreDouble4);
-	hotel.ajouterChambre(ChambreDouble5);
-	hotel.ajouterChambre(ChambreSuite1);
-	hotel.ajouterChambre(ChambreSuite2);
-
-	//Question 6.b)
-	
-	//cout << ChambreSimple1;
-	//cout << hotel;
-
-	//Questtion 6.c)
-	vector<Client> listClient;
-	Client client1(1,"nom1","prenom1",0);
-	Client client2(2,"nom2","prenom2",0);
-	Client client3(3,"nom3","prenom3",0);
-	Client client4(4,"nom4","prenom4",0);
-	Client client5(5,"nom5","prenom5",0);
-	Client client6(6,"nom6","prenom6",0);
-	Client client7(7,"nom7","prenom7",0);
-	Client client8(8,"nom8","prenom8",0);
-	Client client9(9,"nom9","prenom9",0);
-	Client client10(10,"nom10","prenom10",0);
-
-	listClient.push_back(client1);
-	listClient.push_back(client2);
-	listClient.push_back(client3);
-	listClient.push_back(client4);
-	listClient.push_back(client5);
-	listClient.push_back(client6);
-	listClient.push_back(client7);
-	listClient.push_back(client8);
-	listClient.push_back(client9);
-	listClient.push_back(client10);
-	
-	/* cout << client1;
-
-	for(int i = 0 ; i < listClient.size() ; i++){                                                 6d
-    cout << listClient[i];
-    }
-	*/
-	//7 a)
+	reservation reserv10(1,datedebut1,datefin1,hotel,ChambreDouble1,client1);
+	reservation reserv20(2,datedebut2,datefin2,hotel,ChambreSimple2,client2);
+	reservation reserv30(3,datedebut3,datefin3,hotel,ChambreSuite2,client3);
 	vector<reservation> listreservation;
-	reservation newreserv = ajouterreservation(1,hotel,ChambreSimple1,client1);
-	if (newreserv.getidchambre() == 0){ // si l'id de la chambre est 0 alors on n'ajoute pas la reservation a la liste des reservation, car aucune chambre ne peut avoir 0 en id dans mon progamme, de cette maniere si la date n'est pas valide, je place dans la reservation un 0 en id chambre qui me premet de detecter l'ereur
-		
-	}
-	else {
-		listreservation.push_back(newreserv);
-		// cout << listreservation[0].getid();   verification de l'ajout de la reservation dans le vect 
-	}
-	/*
-	cout << "nombre de nuit de la reservation" << endl;
-	cout << nombrenuitsejour(newreserv);
-	*/
-cout << newreserv.getdatedebut().dayindate() << endl;
+	listreservation.push_back(reserv10);
+	listreservation.push_back(reserv20);
+	listreservation.push_back(reserv30);
+
+	cout << reserv10.montantsejour() << endl; // calculer le prix exact du sejour a)
+	cout << reserv10 << endl; //afficher la nouvelle reservation  b)
+
+	//11
 }
+	
