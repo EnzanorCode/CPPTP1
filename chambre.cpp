@@ -9,6 +9,11 @@ Chambre::Chambre(int id, Type type, int prix){
     _type = type;
     _prix = prix;
 }
+Chambre::Chambre(){
+    _id = 0;
+    _type = Type::SIMPLE;
+    _prix = 0 ;
+}
 
 int Chambre::getid() const{
         return _id;

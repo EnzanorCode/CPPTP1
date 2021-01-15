@@ -9,8 +9,7 @@ class Client{
     public:
 
     Client(int id, string nom, string prenom, int reservation);
-    
-
+    Client();
     int getid() const;
     void setid(int id);
     string getnom() const;

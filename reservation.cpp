@@ -13,6 +13,7 @@ reservation::reservation(int idreservation, Date datedebut, Date datefin, Hotel 
     _idchambre = chambre.getid();
     _prix = chambre.getprix();
     _idclient = client.getid();
+    _nomclient = client.getnom(); 
     
    
         
@@ -21,7 +22,19 @@ reservation::reservation(int idreservation, Date datedebut, Date datefin, Hotel 
         chambre.ajouterdisponibilite(datedebut);
         datedebut.nextDay();
     }
-
+    
+}
+reservation::reservation(){ //par default
+    Date dateini(0000,1,1);
+    Date dateini2(0000,1,2);
+    _idreservation = 0;
+    _datedebut = dateini;
+    _datefin = dateini2;
+    _idhotel =  0;
+    _idclient = 0; 
+    _nomclient = "jean";
+    _client = Client();
+    _chambre = Chambre();
 }
 void reservation::setid(int idreservation){
     _idreservation = idreservation;
@@ -29,6 +42,14 @@ void reservation::setid(int idreservation){
 void reservation::setdatedebut(Date datedebut){
     _datedebut = datedebut;
 }
+void reservation::setclient(Client client){
+    _client = client;
+    _idclient = client.getid();
+ }
+void reservation::setchambre(Chambre chambre){
+    _chambre = chambre;
+    _idchambre = chambre.getid();
+ }
 void reservation::setdatefin(Date datefin){
     _datefin = datefin;
 }
@@ -55,6 +76,9 @@ int reservation::getidchambre() const{
 }
 int reservation::getprix() const{
     return _prix;
+}
+string reservation::getnomclient() const{
+    return _nomclient;
 }
 int reservation::getidclient() const{
     return _idclient;

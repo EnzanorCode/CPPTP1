@@ -14,16 +14,20 @@ class reservation {
 
     public :
     reservation(int idreservation, Date datedebut, Date datefin, Hotel hotel, Chambre chambre, Client client);
+    reservation();
     void setid(int id);
     void setdatedebut(Date datedebut);
     void setdatefin(Date datefin);
     void setidhotel(int idhotel);
     void setidchambre(int idchambre);
+    void setchambre(Chambre chambre);
+    void setclient(Client client);
     int getid() const;
     Date getdatedebut() const;
     Date getdatefin() const;
     int getidhotel() const;
     int getidchambre() const;
+    string getnomclient() const;
     int getprix() const;
     int getidclient() const;
     void ModifierDateSejour(Date datedebut, Date datefin);
@@ -32,6 +36,8 @@ class reservation {
     int montantsejour();
 
     private :
+    Client _client;
+    Chambre _chambre;
     int _idreservation;
     Date _datedebut;
     Date _datefin;
@@ -39,6 +45,7 @@ class reservation {
     int _idchambre;
     int _prix;
     int _idclient;
+    string _nomclient;
 };
 ostream& operator << (ostream& os, reservation& r1);
 

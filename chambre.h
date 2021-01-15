@@ -14,6 +14,7 @@ class Chambre{
 public:
 
 Chambre(int id,Type type,int prix);
+Chambre();
 int getid() const;
 string gettype() const;
 int getprix() const;

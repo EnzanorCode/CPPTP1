@@ -11,6 +11,13 @@ using namespace std;
     _prenom = prenom;
     _reservation = reservation;
     }
+    Client::Client()
+    {
+    _id = 0;
+    _nom = "";
+    _prenom = "";
+    _reservation = 0;   
+    }
 
     int Client::getid() const{
         return _id;

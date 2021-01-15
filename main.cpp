@@ -10,11 +10,55 @@
 using namespace std;
 using namespace date;
 
+
+
+void afficherreservation(vector<reservation> listreservation) //11)a
+{	
+	for(int i = 0 ; i<listreservation.size() ; i++)
+	{
+		cout << listreservation[i] << endl;
+	}
+}
+
+void afficherreservation(vector<reservation> listreservation, int id_reservation) //11)b
+{
+	for(int i = 0 ; i<listreservation.size() ; i++)
+	{
+		if(id_reservation == listreservation[i].getid())
+		{
+			cout << listreservation[i] << endl; 
+		}
+	}
+}
+
+void afficherreservationclient(vector<reservation> listreservation, int id_client)//11)c
+{
+	for(int i = 0 ; i<listreservation.size() ; i++)
+	{
+		if (id_client == listreservation[i].getidclient())
+		{
+			cout << listreservation[i] << endl; 
+		}
+	}
+}
+
+void afficherreservationclient(vector<reservation> listreservation, Client c1)//11)c.2
+{
+	for(int i = 0 ; i<listreservation.size() ; i++)
+	{
+		if (c1.getid() == listreservation[i].getidclient())
+		{
+				cout << listreservation[i] << endl;
+		}
+	}
+}
+
 Client afficherclient(vector<Client> listeclient) //9)b
 {
 	vector<Client> nompotentiel;
 	string nomclient = ""; 
-	cin >> nomclient;
+	cout << "rentrer le nom du client que vous cherchez : " << endl; 
+ 	cin >> nomclient;
 	for (int i=0; i<listeclient.size(); i++)
 	{
 		if (listeclient[i].getnom() == nomclient)
@@ -54,6 +98,26 @@ Client afficherclient(vector<Client> listeclient) //9)b
 
 }
 
+Chambre afficherchambre(vector<Chambre> listechambre) //9)b
+{
+	vector<Chambre> chambrepotentiel;
+	int idchambre = 0; 
+	for (int i=0; i<listechambre.size(); i++)
+	{
+		cout << listechambre[i] << endl;
+	}
+	cout << "rentrer l'id de la chambre que vous souhaité selectionner : " << endl; 
+ 	cin >> idchambre;
+	for (int i=0; i<listechambre.size(); i++)
+	{
+		if(idchambre == listechambre[i].getid())
+		{
+			return listechambre[i];
+		}
+	}
+
+}
+
 
 Chambre chambredisponible(Date datedebut,Date datefin,Hotel hotel) //8)a
 {	
@@ -83,14 +147,14 @@ Chambre chambredisponible(Date datedebut,Date datefin,Hotel hotel) //8)a
 							}
 							else
 							{
-								cout << "date de sejour est possible, pour ce type de chambre" << endl;
+								cout << "date de sejour est possible, pour ce type de chambre, id : " << hotel.getlist().at(i).getid()  << "/ prix : " <<hotel.getlist().at(i).getprix() << "Euros "<< endl;
 								return hotel.getlist().at(i); 
 							}
 						}
 					}
 					else
 					{
-						cout <<" chambre disponible: "<< hotel.getlist().at(i).getid()  << endl; //(cas ou la table reservation de la chambre est vide)
+						cout <<" chambre disponible, identifiant : "<< hotel.getlist().at(i).getid()  <<"/ prix : " <<hotel.getlist().at(i).getprix() << "Euros "<< endl; //(cas ou la table reservation de la chambre est vide)
 						return  hotel.getlist().at(i);
 					}
 					
@@ -150,6 +214,75 @@ reservation ajouterreservation(int idreservation,Hotel hotel, Chambre chambre, C
 		return reservation;
 		}
 	
+}
+void modifierreservation(vector<reservation> listreservation,vector<Client> listeclient, vector<Chambre> listechambre) //11.d
+{
+	string choixmodif ="";
+	int idreservation = 0;
+	reservation reserv; 
+	cout << "vous souhaitez modifier quelle reservation ? (entre l'id) : " << endl;
+	afficherreservation(listreservation);
+	cin >> idreservation;	
+	for(int i =0 ; i< listreservation.size() ; i++)
+	{
+		if(idreservation == listreservation[i].getid())
+		{
+			cout << "Vous souhaitez modifier : " << listreservation[i] << endl;
+			reserv = listreservation[i];
+			cout << "que souhaitez vous modifier dans votre reservation : (client/chambre/datedebut/datefin) "<< endl;
+			cin >> choixmodif;
+			if(choixmodif == "client") 
+			{
+				cout << "vous souhaitez modifier le client" << endl;  
+				Client c1 = afficherclient(listeclient);
+				reserv.setclient(c1);
+				cout << "reservation mise a jour" << endl;
+				cout << reserv << endl;
+			}
+			else if (choixmodif == "datedebut")
+			{	
+				cout << "vous souhaitez modifier la date de debut" << endl;
+				int jour;
+				int mois;
+				int annee;
+				cout << "entrer l'annee de la nouvelle date de debut : " << endl; 
+				cin >> annee;
+				cout << "entrer le mois de la nouvelle date de debut : " << endl; 
+				cin >> mois;
+				cout << "entrer le jours de la nouvelle date de debut : " << endl;
+				cin >> jour; 
+				Date newdate(annee,mois,jour);
+				reserv.setdatedebut(newdate);
+				cout << "reservation mise a jour" << endl;
+				cout << reserv << endl;
+			}
+			else if (choixmodif == "datefin")
+			{	
+				cout << "vous souhaitez modifier la date de fin" << endl;
+				int jour;
+				int mois;
+				int annee;
+				cout << "entrer l'annee de la nouvelle date de fin : " << endl; 
+				cin >> annee;
+				cout << "entrer le mois de la nouvelle date de fin : " << endl; 
+				cin >> mois;
+				cout << "entrer le jours de la nouvelle date de fin : " << endl;
+				cin >> jour; 
+				Date newdate(annee,mois,jour);
+				reserv.setdatefin(newdate);
+				cout << "reservation mise a jour" << endl;
+				cout << reserv << endl;
+			}
+			else if (choixmodif == "chambre")
+			{
+				cout << "vous souhaitez modfier la chambre" << endl;  
+				Chambre chambre1 = afficherchambre(listechambre);
+				reserv.setchambre(chambre1);			
+				cout << "reservation mise a jour" << endl;
+				cout << reserv << endl;
+			}
+		}
+	}
 }
 
 int main(){
@@ -264,6 +397,7 @@ hotel.ajouterChambre(ChambreDouble5);
 hotel.ajouterChambre(ChambreSuite1);
 hotel.ajouterChambre(ChambreSuite2);
 
+afficherchambre(ListChambre);
 //Question 6.b)
 	
 //cout << ChambreSimple1;
@@ -272,9 +406,9 @@ hotel.ajouterChambre(ChambreSuite2);
 //Questtion 6.c)
 vector<Client> listClient;
 	
-Client client1(1,"nom1","prenom1",0);
-Client client2(2,"nom2","prenom2",0);
-Client client3(3,"nom3","prenom3",0);
+Client client1(1,"nom1","prenom1",1);
+Client client2(2,"nom2","prenom2",1);
+Client client3(3,"nom3","prenom3",2);
 Client client4(4,"nom4","prenom4",0);
 Client client5(5,"nom5","prenom5",0);
 Client client6(6,"nom6","prenom6",0);
@@ -341,25 +475,42 @@ cout <<"le client selectionne est : "<< c1 << endl;
 	Date datedebut1(2021,1,1);
 	Date datedebut2(2021,2,1);
 	Date datedebut3(2021,3,1); 
-	Date datedebut4(2021,2,1);
-	Date datedebut5(2021,3,1);
+	Date datedebut4(2021,4,1);
+	Date datedebut5(2021,5,1);
 	Date datefin1(2021,1,3);
 	Date datefin2(2021,2,3);
 	Date datefin3(2021,3,3);
-	Date datefin4(2021,2,3);
-	Date datefin5(2021,3,3);
+	Date datefin4(2021,4,3);
+	Date datefin5(2021,5,3);
 	
 	reservation reserv10(1,datedebut1,datefin1,hotel,ChambreDouble1,client1);
 	reservation reserv20(2,datedebut2,datefin2,hotel,ChambreSimple2,client2);
 	reservation reserv30(3,datedebut3,datefin3,hotel,ChambreSuite2,client3);
+	reservation reserv40(4,datedebut4,datefin4,hotel,ChambreSimple3,client3); //Deux reservation pour le client numero 3 
 	vector<reservation> listreservation;
 	listreservation.push_back(reserv10);
 	listreservation.push_back(reserv20);
 	listreservation.push_back(reserv30);
+	listreservation.push_back(reserv40);
 
-	cout << reserv10.montantsejour() << endl; // calculer le prix exact du sejour a)
-	cout << reserv10 << endl; //afficher la nouvelle reservation  b)
+	cout << "Montant de la reservation n°10 "<<reserv10.montantsejour() << endl; // calculer le prix exact du sejour a)
+	cout << "Test de l'affichage de la reservation : "<< reserv10 << endl; //afficher la nouvelle reservation  b)
 
-	//11
+	//11)a
+	cout << "liste des reservations : " << endl; 
+	afficherreservation(listreservation);
+	//11)b
+	cout << "affichage de la reservation qui possede l'id n'2 :" << endl;
+	afficherreservation(listreservation,2);
+	//11)c
+	cout << "voici la liste des reservation faite par le client posssedant l'identifiant n'3 : " << endl;
+	afficherreservationclient(listreservation,3);
+	cout << "choix du client afin d'afficher sa liste de de reservation " << endl;
+	Client c11 = afficherclient(listClient); // Choix du client
+	afficherreservationclient(listreservation,c11);	//Affichage de sa liste de reservation 	 
+	//11)d
+	modifierreservation(listreservation,listClient,ListChambre);
+
+	
 }
 	
