@@ -27,6 +27,7 @@ class reservation {
     Date getdatefin() const;
     int getidhotel() const;
     int getidchambre() const;
+    Chambre getchambre();
     string getnomclient() const;
     int getprix() const;
     int getidclient() const;

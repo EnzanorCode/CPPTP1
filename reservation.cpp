@@ -74,6 +74,9 @@ int reservation::getidhotel() const{
 int reservation::getidchambre() const{
     return _idchambre;
 }
+Chambre reservation::getchambre(){
+    return _chambre;
+}
 int reservation::getprix() const{
     return _prix;
 }

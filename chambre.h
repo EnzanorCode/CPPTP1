@@ -18,7 +18,7 @@ Chambre();
 int getid() const;
 string gettype() const;
 int getprix() const;
-vector<Date> getdisponibilite() const;
+vector<Date> getdisponibilite();
 void ajouterdisponibilite(Date date);
 void setid(int id);
 void settype(Type type);

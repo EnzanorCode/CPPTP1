@@ -124,13 +124,20 @@ Chambre chambredisponible(Date datedebut,Date datefin,Hotel hotel) //8)a
 	Date dateinitiale(0,1,1);
 	vector<Date> sejour;
 	sejour.push_back(dateinitiale);
-	for (int i=0; i < (datedebut - datefin) ; i++)
+	
+	for (int i=0; i < (datefin - datedebut) ; i++)  //i parcourt le sejour grace a NextDay
 	{
 		sejour.push_back(datedebut);
 		datedebut.nextDay();
 	}
+
+	for (int i = 0; i<hotel.getlist().size() ; i++) //affichage des chambres de hotel
+	{
+		hotel.getlist().at(i);
+	}
+
 	string typechambre = ""; 
-	cout << "enter le type de chambre que vous voulez" << endl; 
+	cout << "entrer le type de chambre que vous voulez" << endl; 
 	cin >> typechambre;
 	for (int i=0 ; i < hotel.getlist().size() ; i++ )
 		{
@@ -168,8 +175,6 @@ Chambre chambredisponible(Date datedebut,Date datefin,Hotel hotel) //8)a
 		
 	
 }
-
-
 
 int nombrenuitsejour(reservation reserv) //7)b
 { 
@@ -229,7 +234,7 @@ void modifierreservation(vector<reservation> listreservation,vector<Client> list
 		{
 			cout << "Vous souhaitez modifier : " << listreservation[i] << endl;
 			reserv = listreservation[i];
-			cout << "que souhaitez vous modifier dans votre reservation : (client/chambre/datedebut/datefin) "<< endl;
+			cout << "que souhaitez vous modifier dans votre reservation : (client/chambre/date) "<< endl;
 			cin >> choixmodif;
 			if(choixmodif == "client") 
 			{
@@ -239,51 +244,158 @@ void modifierreservation(vector<reservation> listreservation,vector<Client> list
 				cout << "reservation mise a jour" << endl;
 				cout << reserv << endl;
 			}
-			else if (choixmodif == "datedebut")
+			else if (choixmodif == "date")
 			{	
-				cout << "vous souhaitez modifier la date de debut" << endl;
-				int jour;
-				int mois;
-				int annee;
+				reserv = listreservation[i];
+				int annee1, mois1, jour1, annee2, mois2, jour2;
+				cout <<" sur quelle periode voulez vous votre nouvelle chambre pour votre reservation" << endl;
 				cout << "entrer l'annee de la nouvelle date de debut : " << endl; 
-				cin >> annee;
+				cin >> annee1;
 				cout << "entrer le mois de la nouvelle date de debut : " << endl; 
-				cin >> mois;
-				cout << "entrer le jours de la nouvelle date de debut : " << endl;
-				cin >> jour; 
-				Date newdate(annee,mois,jour);
-				reserv.setdatedebut(newdate);
-				cout << "reservation mise a jour" << endl;
-				cout << reserv << endl;
-			}
-			else if (choixmodif == "datefin")
-			{	
-				cout << "vous souhaitez modifier la date de fin" << endl;
-				int jour;
-				int mois;
-				int annee;
+				cin >> mois1;
+				cout << "entrer le jours de la nouvelle date de debut : " << endl;                                
+				cin >> jour1; 
+				Date datedebut(annee1,mois1,jour1);
+				Date copy = datedebut;
 				cout << "entrer l'annee de la nouvelle date de fin : " << endl; 
-				cin >> annee;
+				cin >> annee2;
 				cout << "entrer le mois de la nouvelle date de fin : " << endl; 
-				cin >> mois;
-				cout << "entrer le jours de la nouvelle date de fin : " << endl;
-				cin >> jour; 
-				Date newdate(annee,mois,jour);
-				reserv.setdatefin(newdate);
+				cin >> mois2;
+				cout << "entrer le jours de la nouvelle date de fin : " << endl;                                
+				cin >> jour2; 
+				Date datefin(annee2,mois2,jour2);
+				Date dateinitiale(0,1,1);
+				vector<Date> sejour;
+				sejour.push_back(dateinitiale);
+				for (int i=0; i < (datefin - datedebut) ; i++)
+				{
+					sejour.push_back(copy);
+					copy.nextDay();
+				}
+				for(int k=0 ; k< sejour.size() ; k++)
+				{	
+					if(reserv.getchambre().getdisponibilite().size() != 0 ) 
+					{
+						for(int j=0 ; j<reserv.getchambre().getdisponibilite().size(); j++)                 //verif disponibilité des dates pour la chambre en question ! 
+						{ 
+							if( sejour[k] == reserv.getchambre().getdisponibilite().at(j))
+							{		
+							}
+							else
+							{
+								cout << "date de sejour est possible: " << endl;
+								reserv.setdatedebut(datedebut);
+								reserv.setdatefin(datefin);
+							}
+						}
+					}
+					else
+					{
+						reserv.setdatedebut(datedebut);
+						reserv.setdatefin(datefin);
+					}
+				}
+		
 				cout << "reservation mise a jour" << endl;
 				cout << reserv << endl;
 			}
+		
 			else if (choixmodif == "chambre")
 			{
-				cout << "vous souhaitez modfier la chambre" << endl;  
-				Chambre chambre1 = afficherchambre(listechambre);
-				reserv.setchambre(chambre1);			
+				int annee1, mois1, jour1, annee2, mois2, jour2;
+				cout <<" sur quelle periode voulez vous votre nouvelle chambre pour votre reservation" << endl;
+				cout << "entrer l'annee de la nouvelle date de debut : " << endl; 
+				cin >> annee1;
+				cout << "entrer le mois de la nouvelle date de debut : " << endl; 
+				cin >> mois1;
+				cout << "entrer le jours de la nouvelle date de debut : " << endl;                                
+				cin >> jour1; 
+				Date datedebut(annee1,mois1,jour1);
+				Date copy = datedebut;
+				cout << "entrer l'annee de la nouvelle date de fin : " << endl; 
+				cin >> annee2;
+				cout << "entrer le mois de la nouvelle date de fin : " << endl; 
+				cin >> mois2;
+				cout << "entrer le jours de la nouvelle date de fin : " << endl;                                
+				cin >> jour2; 
+				Date datefin(annee2,mois2,jour2);
+				Date dateinitiale(0,1,1);
+				vector<Date> sejour;
+				sejour.push_back(dateinitiale);
+				for (int i=0; i < (datefin - datedebut) ; i++)
+				{
+					sejour.push_back(copy);
+					copy.nextDay();
+				}
+				cout << "vous souhaitez choisir quelle chambre ? " << endl;     
+				Chambre chambre1 = afficherchambre(listechambre);	//selection de la chambre 
+				for(int k=0 ; k< sejour.size() ; k++)
+					{	
+						if(chambre1.getdisponibilite().size() != 0 ) 
+						{
+							for(int j=0 ; j<chambre1.getdisponibilite().size(); j++)      //verif disponibilité pour la chambre selectionner 
+							{ 
+								if( sejour[k] == chambre1.getdisponibilite().at(j))
+								{		
+								}
+								else
+								{
+									cout << "date de sejour est possible, pour ce type de chambre, id : " << chambre1.getid()  << "/ prix : " << chambre1.getprix() << "Euros "<< endl;
+									reserv.setchambre(chambre1);
+									reserv.setdatedebut(datedebut);
+									reserv.setdatefin(datefin);
+								}
+							}
+						}
+				
+						else
+						{
+							reserv.setchambre(chambre1);	
+							reserv.setdatedebut(datedebut);
+							reserv.setdatefin(datefin);
+						}
+					}
+		
 				cout << "reservation mise a jour" << endl;
 				cout << reserv << endl;
 			}
 		}
 	}
 }
+/*
+void annulerreservation(vector<reservation> listereservation){
+
+	int idsupp;
+	for(int i =0; i < listereservation.size() ;i++) 
+	{
+		cout << listereservation[i] << endl;
+	}
+	cout << "veuillez choisir l'id de la reservation que vous souhaité supprimer " << endl;
+	cin >> idsupp;
+	for(int i = 0 ; i<listereservation.size(); i++)
+	{
+		if(idsupp == listereservation[i].getid())
+		{
+			for(int y = 0; y < listereservation[i].getchambre().getdisponibilite().size(); y++)
+			if(listereservation[i].getdatedebut() == listereservation[i].getchambre().getdisponibilite().at(y))
+			{
+				Date removedate = listereservation[i].getdatedebut();
+				Date datefinplus1 = listereservation[i].getdatefin();
+				datefinplus1.nextDay();
+				while(removedate != datefinplus1);
+				{
+					auto it = remove(listereservation[i].getchambre().getdisponibilite().begin(), listereservation[i].getchambre().getdisponibilite().end(), removedate)
+					listereservation[i].getchambre().getdisponibilite().erase(it , listereservation[i].getchambre().getdisponibilite().end()); //date de fin
+					removedate.nextDay();
+				}
+				
+			}
+				
+		}
+	}
+}
+*/
+
 
 int main(){
 
@@ -368,36 +480,31 @@ cout << "montant du sejour : " << reservation1.montantsejour() << endl;
 
 //Question 6/a)
 	*/
+vector<Chambre> ListChambre;
 Chambre ChambreSimple1(100, Type::SIMPLE, 100);
 Chambre ChambreSimple2(101, Type::SIMPLE, 100);
 Chambre ChambreSimple3(102, Type::SIMPLE, 100);
-	
 Chambre ChambreDouble1(103, Type::DOUBLE, 125);
 Chambre ChambreDouble2(104, Type::DOUBLE, 125);
 Chambre ChambreDouble3(105, Type::DOUBLE, 125);
 Chambre ChambreDouble4(106, Type::DOUBLE, 125);
 Chambre ChambreDouble5(107, Type::DOUBLE, 125);
-
 Chambre ChambreSuite1(108, Type::SUITE, 210);
 Chambre ChambreSuite2(109, Type::SUITE, 210);
-
-vector<Chambre> ListChambre;
-
+ListChambre.push_back(ChambreSimple1);
+ListChambre.push_back(ChambreSimple2);
+ListChambre.push_back(ChambreSimple3);
+ListChambre.push_back(ChambreDouble1);
+ListChambre.push_back(ChambreDouble2);
+ListChambre.push_back(ChambreDouble3);
+ListChambre.push_back(ChambreDouble3);
+ListChambre.push_back(ChambreDouble4);
+ListChambre.push_back(ChambreDouble5);
+ListChambre.push_back(ChambreSuite1);
+ListChambre.push_back(ChambreSuite2);
 
 Hotel hotel(1,"hotel1","ville1",ListChambre);
 	
-hotel.ajouterChambre(ChambreSimple1);
-hotel.ajouterChambre(ChambreSimple2);
-hotel.ajouterChambre(ChambreSimple3);
-hotel.ajouterChambre(ChambreDouble1);
-hotel.ajouterChambre(ChambreDouble2);
-hotel.ajouterChambre(ChambreDouble3);
-hotel.ajouterChambre(ChambreDouble4);
-hotel.ajouterChambre(ChambreDouble5);
-hotel.ajouterChambre(ChambreSuite1);
-hotel.ajouterChambre(ChambreSuite2);
-
-afficherchambre(ListChambre);
 //Question 6.b)
 	
 //cout << ChambreSimple1;
@@ -464,7 +571,9 @@ cout << nombrenuitsejour(newreserv) << endl;
 	//8.a,b,c) verif
 Date datedebut(2020,1,14);
 Date datefin(2020,1,17);
-chambredisponible(datedebut,datefin,hotel);
+cout << "QUESTION 8 : Verification de la disponibilite d'une chambre (sur une periode donnee dans un hotel donne) : " << endl;
+Chambre chambreQ8 = chambredisponible(datedebut,datefin,hotel);
+cout << chambreQ8 << endl;
 	
    //9a,b,c) verif
 
@@ -510,7 +619,15 @@ cout <<"le client selectionne est : "<< c1 << endl;
 	afficherreservationclient(listreservation,c11);	//Affichage de sa liste de reservation 	 
 	//11)d
 	modifierreservation(listreservation,listClient,ListChambre);
-
+	//11)e
 	
+	/*
+	annulerreservation(listreservation);
+	cout << "verfication de l'annulation de la reservation " << endl;
+	for(int i=0; i<listreservation.size(); i++)
+	{
+		cout << listreservation[i] <<endl;
+	}
+	*/
 }
 	

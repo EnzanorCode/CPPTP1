@@ -19,7 +19,7 @@ int Chambre::getid() const{
         return _id;
     }
 
-vector<Date> Chambre::getdisponibilite() const{
+vector<Date> Chambre::getdisponibilite(){
         return _disponibilite;
     }
 void Chambre::ajouterdisponibilite(Date date){
