@@ -16,7 +16,7 @@ void afficherreservation(vector<reservation> listreservation) //11)a
 {	
 	for(int i = 0 ; i<listreservation.size() ; i++)
 	{
-		cout << listreservation[i] << endl;
+		cout << listreservation[i];
 	}
 }
 
@@ -26,7 +26,7 @@ void afficherreservation(vector<reservation> listreservation, int id_reservation
 	{
 		if(id_reservation == listreservation[i].getid())
 		{
-			cout << listreservation[i] << endl; 
+			cout << listreservation[i]; 
 		}
 	}
 }
@@ -37,7 +37,7 @@ void afficherreservationclient(vector<reservation> listreservation, int id_clien
 	{
 		if (id_client == listreservation[i].getidclient())
 		{
-			cout << listreservation[i] << endl; 
+			cout << listreservation[i]; 
 		}
 	}
 }
@@ -48,8 +48,9 @@ void afficherreservationclient(vector<reservation> listreservation, Client c1)//
 	{
 		if (c1.getid() == listreservation[i].getidclient())
 		{
-				cout << listreservation[i] << endl;
+				cout << listreservation[i];
 		}
+		
 	}
 }
 
@@ -57,7 +58,7 @@ Client afficherclient(vector<Client> listeclient) //9)b
 {
 	vector<Client> nompotentiel;
 	string nomclient = ""; 
-	cout << "rentrer le nom du client que vous cherchez : " << endl; 
+	cout << "Rentrer le nom du client que vous cherchez : (Liste des clients Q6) : ";  //(parmi la liste de client mise en parametre de la fonction) 
  	cin >> nomclient;
 	for (int i=0; i<listeclient.size(); i++)
 	{
@@ -119,7 +120,7 @@ Chambre afficherchambre(vector<Chambre> listechambre) //9)b
 }
 
 
-Chambre chambredisponible(Date datedebut,Date datefin,Hotel hotel) //8)a
+Chambre chambredisponible(Date datedebut,Date datefin,Hotel hotel) //8-a)-b)
 {	
 	Date dateinitiale(0,1,1);
 	vector<Date> sejour;
@@ -137,7 +138,7 @@ Chambre chambredisponible(Date datedebut,Date datefin,Hotel hotel) //8)a
 	}
 
 	string typechambre = ""; 
-	cout << "entrer le type de chambre que vous voulez" << endl; 
+	cout << "entrer le type de chambre que vous voulez : (simple/double/suite) " << endl; 
 	cin >> typechambre;
 	for (int i=0 ; i < hotel.getlist().size() ; i++ )
 		{
@@ -154,14 +155,14 @@ Chambre chambredisponible(Date datedebut,Date datefin,Hotel hotel) //8)a
 							}
 							else
 							{
-								cout << "date de sejour est possible, pour ce type de chambre, id : " << hotel.getlist().at(i).getid()  << "/ prix : " <<hotel.getlist().at(i).getprix() << "Euros "<< endl;
+								cout << "date de sejour possible pour ce type de chambre, id : " << hotel.getlist().at(i).getid()  << " au prix de : " <<hotel.getlist().at(i).getprix() << " Euros "<< endl;
 								return hotel.getlist().at(i); 
 							}
 						}
 					}
 					else
 					{
-						cout <<" chambre disponible, identifiant : "<< hotel.getlist().at(i).getid()  <<"/ prix : " <<hotel.getlist().at(i).getprix() << "Euros "<< endl; //(cas ou la table reservation de la chambre est vide)
+						cout <<"La chambre de type "<< hotel.getlist().at(i).gettype()  << " n'"<< hotel.getlist().at(i).getid()  <<" au prix de : " <<hotel.getlist().at(i).getprix() << "Euros est disponible.  "<< endl; //(cas ou la table reservation de la chambre est vide)
 						return  hotel.getlist().at(i);
 					}
 					
@@ -170,13 +171,13 @@ Chambre chambredisponible(Date datedebut,Date datefin,Hotel hotel) //8)a
 			
 		}
 
-	cout << " pas de chambre de ce type disponible " << endl;  //8)c
+	cout << " pas de chambre de ce type disponible " << endl;  //8-c)
 	return chambredisponible(datedebut,datefin,hotel);
 		
 	
 }
 
-int nombrenuitsejour(reservation reserv) //7)b
+int nombrenuitsejour(reservation reserv) //7-b)
 { 
 	Date d1 = reserv.getdatedebut();
 	Date d2 = reserv.getdatefin();
@@ -184,7 +185,7 @@ int nombrenuitsejour(reservation reserv) //7)b
 	return c;
 }
 
-reservation ajouterreservation(int idreservation,Hotel hotel, Chambre chambre, Client client) //7)a
+reservation ajouterreservation(int idreservation,Hotel hotel, Chambre chambre, Client client) //7-a)
 { 
 	int jourdebut;
 	int moisdebut;
@@ -192,33 +193,31 @@ reservation ajouterreservation(int idreservation,Hotel hotel, Chambre chambre, C
 	int jourfin;
 	int moisfin;	
 	int annefin;		
-	cout << "entrer le jour du debut du sejour" << endl;
+	cout << "entrer le jour du debut de votre sejour :" << endl;
 	cin >> jourdebut;
-	cout << "entrer le mois du debut du sejour" << endl;
+	cout << "entrer le mois du debut de votre sejour :" << endl;
 	cin >> moisdebut;
-	cout << "entrer l'annee du debut du sejour" << endl;
+	cout << "entrer l'annee du debut de votre sejour :" << endl;
 	cin >> annedebut;
-	cout << "entrer le jour de fin du sejour" << endl;
+	cout << "entrer le jour de fin de votre sejour :" << endl;
 	cin >> jourfin;
-	cout << "entrer le mois de fin du sejour" << endl;
+	cout << "entrer le mois de fin de votre sejour :" << endl;
 	cin >> moisfin;
-	cout << "entrer l'annee de fin du sejour" << endl;
+	cout << "entrer l'annee de fin de votre sejour :" << endl;
 	cin >> annefin;
 	Date datedebut(annedebut,moisdebut,jourdebut);
 	Date datefin(annefin,moisfin,jourfin);
-	if ((datefin.dayindate() - datedebut.dayindate()) > 0 )
+	if ((datefin - datedebut) > 0) 
 		{
 		reservation reservation(idreservation,datedebut,datefin,hotel,chambre,client);
-		cout << "reservation bien enregistree, nombre de nuit reservee : " <<  nombrenuitsejour(reservation) <<endl;
+		cout << "reservation bien enregistree, nombre de nuit reservee : " <<  nombrenuitsejour(reservation) <<endl; //7-b)
 		return reservation;
 		}
 	else
-		{
-		Chambre chambre(0, Type::SIMPLE, 100);
-		reservation reservation(-1,datedebut,datefin,hotel,chambre,client); // si id vaut -1 alors erreur
+	{
+		reservation reservation(-1,datedebut,datefin,hotel,chambre,client);
 		return reservation;
-		}
-	
+	}
 }
 void modifierreservation(vector<reservation> listreservation,vector<Client> listeclient, vector<Chambre> listechambre) //11.d
 {
@@ -276,7 +275,7 @@ void modifierreservation(vector<reservation> listreservation,vector<Client> list
 				{	
 					if(reserv.getchambre().getdisponibilite().size() != 0 ) 
 					{
-						for(int j=0 ; j<reserv.getchambre().getdisponibilite().size(); j++)                 //verif disponibilité des dates pour la chambre en question ! 
+						for(int j=0 ; j<reserv.getchambre().getdisponibilite().size(); j++) //verif disponibilité des dates pour la chambre en question ! 
 						{ 
 							if( sejour[k] == reserv.getchambre().getdisponibilite().at(j))
 							{		
@@ -399,87 +398,97 @@ void annulerreservation(vector<reservation> listereservation){
 
 int main(){
 
+//PARTIE 1
+//Question 1 : verification du bon focntionnement de la classe Date (avec surcharge "-" rajouter) 
 
-//  QUESTION 1 //////////////////////////////////////////////////////////////TEST DE DATE////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*
+cout << "Question 1 : test de la classe Date" << endl << endl; 
 Date d1(2019,12,24);
-cout << "la date est : " << d1.toString() << endl;
-cout << "la date  : "<< d1.day() << " / " << d1.month()  << " / " << d1.year() << endl;
+Date d2(2019,12,5);
+cout << "la date 1 est : " << d1.toString() << endl;
+cout << "la date 2 est : "<< d2.day() << " / " << d2.month()  << " / " << d2.year() << endl;
+cout << "la difference entre la date 1, et la date 2 est de " << d1-d2 << " jours." <<  endl << endl; //surchage de "-".
 
+//Question 2 : verification du bon focntionnement de la classe Client. 
 
-//////////////////////////////////////////////////////////////////////test client/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+cout << "Question 2 : test de la classe Client : " << endl << endl;
+string nom = "Villaverde";
+string prenom = "Lucas";
+Client client1(01,nom,prenom,46); //creation du client1 
+//test des getters
+cout << "l'id du client n'1 est : " << client1.getid() << endl;   
+cout << "le nom du client n'1 est : " << client1.getnom() << endl;  
+cout << "le prenom du client n'1 est : " <<  client1.getprenom() << endl;
+cout << "le nombre de reservation du client n'1 est : "<< client1.getreservation() << endl;
+cout << client1 << endl << endl;
+//test des setters
+string newnom ="Flantier";
+string newprenom ="jean";
+client1.setid(45);
+client1.setnom(newprenom);
+client1.setprenom(newnom);
+client1.setreservation(84);
+cout << "le nouvelle id du client n'1 est : " <<client1.getid() << endl;
+cout << "le nouveau nom du client n'1 est : " << client1.getnom() << endl;
+cout << "le nouveau prenom du client n'1 est : " << client1.getprenom() << endl;
+cout << "le nouveau nombre de reservation du client n'1 est : "<< client1.getreservation() << endl << endl;
 
-string nom = "Andres";
-string prenom = "Robert";
-Client c1(01,nom,prenom,46);
-cout << c1.getid() << endl;
-cout << c1.getnom() << endl;
-cout << c1.getprenom() << endl;
-cout << c1.getreservation() << endl;
-   
-string newnom ="jean";
-string newprenom ="claude";
-c1.setid(45);
-c1.setnom(newprenom);
-c1.setprenom(newnom);
-c1.setreservation(84);
+//Question 3 : verification du bon focntionnement de la classe Chambre. 
 
-cout << c1.getid() << endl;
-cout << c1.getnom() << endl;
-cout << c1.getprenom() << endl;
-cout << c1.getreservation() << endl;
-/////////////////////////////////////////////////////////////////////Test de Chambre//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//test des getters
+cout << "Question 3 : test de la classe Client : " << endl << endl;
+Chambre chambre1(89,Type::SIMPLE,135);
+cout << "L'id de la chambre n'1 est : " << chambre1.getid() << endl;
+cout << "Le type de la chambre n'1 est : " << chambre1.gettype() << endl;
+cout << "Le prix de la chambre n'1 est : " << chambre1.getprix() << endl;
+//test des setters
+chambre1.setid(1);
+chambre1.settype(Type::DOUBLE);
+chambre1.setprix(145);
+cout << "le nouvelle id de la chambre n'1 est : " <<chambre1.getid() << endl;
+cout << "Le nouveau type de la chambre n'1 est : " <<chambre1.gettype() << endl;
+cout << "Le nouevau prix de la chambre n'1 est : " <<chambre1.getprix() << endl;
+cout << chambre1 << endl << endl;
 
-Chambre c1(52,Type::SIMPLE,19996);
-cout << c1.getid() << endl;
-cout << c1.gettype() << endl;
-cout << c1.getprix() << endl;
+//Question 4 : verification du bon fonctionnement de la classe Hotel.
 
-c1.setid(56);
-c1.settype(Type::DOUBLE);
-c1.setprix(999);
-
-cout << c1.getid() << endl;
-cout << c1.gettype() << endl;
-cout << c1.getprix() << endl;
-
-//////////////////////////////////////////////////////////////////////////////Test de Hotel///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-Chambre c1(1,Type::SIMPLE,150);
-Chambre c2(2,Type::DOUBLE,174);
+cout << "Question 4 : test de la classe Hotel :  " << endl << endl;
+Chambre chambre2(2,Type::SIMPLE,150);
+Chambre chambre3(3,Type::DOUBLE,174);
+Chambre chambre4(4,Type::SUITE,195);
 vector<Chambre> ChambreDeBase;
-ChambreDeBase.push_back(c1);
-ChambreDeBase.push_back(c2);
-Hotel hotel("hetelid","hotelnom","hotelville",ChambreDeBase);
- 
-cout << hotel.getid() << endl;
-cout << hotel.getnom() << endl;
-cout << hotel.getville() << endl;
-cout << hotel.getlist().at(1).get() << endl;
+ChambreDeBase.push_back(chambre1);
+ChambreDeBase.push_back(chambre2);
+ChambreDeBase.push_back(chambre3);
+Hotel hotel_1(1,"nom_hotel","ville_hotel",ChambreDeBase);
+cout << "L'id de l'hotel_1 est : " << hotel_1.getid() << endl;
+cout << "Le nom de l'hotel_1 est : " << hotel_1.getnom() << endl;
+cout << "La ville de l'hotel_1 est : " << hotel_1.getville() << endl;
+cout << "La chambre renter en premier dans le tableau des chambres possede l'id : " << hotel_1.getlist().at(0).getid() << endl;
+//b)
+hotel_1.ajouterChambre(chambre4);
+cout << "Le Type de la chambre n'4 rajouter dans le tableau de chambre : " << hotel_1.getlist().at(3).gettype() << endl << endl;
 
- //////////////////////////////////////////////////////////////////////////////Test De l'ajout de date ////////////////////////////////////////////////////////////////////////////////////////////////////
 
- Date d1(2004,12,25);
+//Question 5 : verification du bon fonctionnement de la classe Reservation.
 
- cout << d1.year() << endl;
- cout << d1.toString()<< endl;
-//////////////////////////////////////////////////////////////////////////////Classe reservation ////////////////////////////////////////////////////////////////////////////////////////////////////
-
+cout << "Question 5 : test de classe reservation : " << endl << endl;
 Client client0(1,"nom1","prenom1",0);
-Chambre ChambreSimple10(100, Type::SIMPLE, 100);
-vector<Chambre> list;
-list.push_back(ChambreSimple10);
-Hotel hotel1(1,"hotel1","ville1",list);
-Date d1(2015,7,10);
-Date d2(2015,8,9);
-reservation reservation1(1,d1,d2,hotel1, ChambreSimple10,client0);
+reservation reservation1(95,d2,d1,hotel_1,chambre1,client1); // creation de la reservation  	
+cout << reservation1;
+cout << "La duree du sejour : " << reservation1.duresejour() << endl;
+cout << "Le montant du sejour : " << reservation1.montantsejour() << endl;
+Date d3(2020,2,16);
+Date d4(2020,2,24);
+reservation1.setdatedebut(d3);
+reservation1.setdatefin(d4);
+reservation1.setidchambre(5);
+cout << reservation1 << endl;
 	
-cout << "duree du sejour : " << reservation1.duresejour() << endl;
-cout << "montant du sejour : " << reservation1.montantsejour() << endl;
-	
+//PARTIE 2 
+//Question 6 : Creation d'un hôtel et de clients
 
-//Question 6/a)
-	*/
+//a)
+cout << "Question 6 : Creation d'un hotel et clients : " << endl << endl;
 vector<Chambre> ListChambre;
 Chambre ChambreSimple1(100, Type::SIMPLE, 100);
 Chambre ChambreSimple2(101, Type::SIMPLE, 100);
@@ -502,132 +511,138 @@ ListChambre.push_back(ChambreDouble4);
 ListChambre.push_back(ChambreDouble5);
 ListChambre.push_back(ChambreSuite1);
 ListChambre.push_back(ChambreSuite2);
-
-Hotel hotel(1,"hotel1","ville1",ListChambre);
-	
-//Question 6.b)
-	
-//cout << ChambreSimple1;
-//cout << hotel;
-
-//Questtion 6.c)
+Hotel hotel(1,"hotel_1","ville_1",ListChambre);
+//b)
+cout << "Voici les informations de la chambre simple 1 : " << endl;
+cout << ChambreSimple1 << endl;
+cout << "Voici les informations de l'hotel : ";
+cout << hotel;
+//c)
 vector<Client> listClient;
-	
-Client client1(1,"nom1","prenom1",1);
-Client client2(2,"nom2","prenom2",1);
-Client client3(3,"nom3","prenom3",2);
-Client client4(4,"nom4","prenom4",0);
-Client client5(5,"nom5","prenom5",0);
-Client client6(6,"nom6","prenom6",0);
-Client client7(7,"nom9","prenom7",0);
-Client client8(8,"nom9","prenom8",0);
-Client client9(9,"nom9","prenom9",0);
-Client client10(10,"nom10","prenom10",0);
-
-listClient.push_back(client1);
-listClient.push_back(client2);
-listClient.push_back(client3);
-listClient.push_back(client4);
-listClient.push_back(client5);
-listClient.push_back(client6);
-listClient.push_back(client7);
-listClient.push_back(client8);
-listClient.push_back(client9);
+Client client10(1,"nom1","prenom1",1);
+Client client11(2,"nom2","prenom2",1);
+Client client12(3,"nom3","prenom3",2);
+Client client13(4,"nom4","prenom4",0);
+Client client14(5,"nom5","prenom5",0);
+Client client15(6,"nom6","prenom6",0);
+Client client16(7,"nom9","prenom7",0);
+Client client17(8,"nom9","prenom8",0);
+Client client18(9,"nom9","prenom9",0);
+Client client19(10,"nom10","prenom10",0);
 listClient.push_back(client10);
-	
-// << client1;
-
-/*
-//Question 6.b)
+listClient.push_back(client11);
+listClient.push_back(client12);
+listClient.push_back(client13);
+listClient.push_back(client14);
+listClient.push_back(client15);
+listClient.push_back(client16);
+listClient.push_back(client17);
+listClient.push_back(client18);
+listClient.push_back(client19);
+//d)
+cout << endl <<"voici les info du client n'12 : " << endl << client12 << endl;
+cout << "Voici les informations de tout les clients : " << endl;
 for(int i = 0 ; i < listClient.size() ; i++)
-	{                                                 
-cout << listClient[i];
-    }
-	
-*/
-//7 a)
-/*
+{                                                 
+	cout << listClient[i];
+}
+cout << endl; 
+//Question 7 : Validation des dates de reservations 
+
+//a)
+cout << "Question 7 : Validation des dates de reservations : " << endl << endl; 
+cout << "Saisissez les dates de votre reservation : " << endl;
 vector<reservation> listreservation;
 reservation newreserv = ajouterreservation(1,hotel,ChambreSimple1,client1);
-
-if (newreserv.getidchambre() == -1)
-	{ // si l'id de la chambre est 0 alors on n'ajoute pas la reservation a la liste des reservation, car aucune chambre ne peut avoir -1 en id dans mon progamme, de cette maniere si la date n'est pas valide, je place dans la reservation un -1 en id chambre qui me premet de detecter l'ereur
-		return 0;
-	}
-	else {
-		listreservation.push_back(newreserv);
-		cout << "La chambre avec l'id " <<  listreservation[0].getid() << " a bien ete ajoute ";   //verification de l'ajout de la reservation dans le vect 
-	}
-
-	
-	//7 b) Test de la fonction Nombre nuit sejour 
+if (newreserv.getid() == -1) //controle d'erreur (-1 est la valeur attribué si les dates ne sont pas corrects)
+{ 
+	return 0;
+}
+else 
+{
+	listreservation.push_back(newreserv); //ajout de la reservation a la chambre
+	cout << "La chambre avec l'id " <<  listreservation[0].getid() << " a bien ete reserverve ";   //verification de l'ajout de la reservation dans le vect 
+}
+//b) Test de la fonction Nombre nuit sejour (a été inseré dans la fonction ajouterreservation précédemment realisé)
 if (nombrenuitsejour(newreserv)==0){return 0;}
-cout << "Voici le nombre de nuit votre reservation : " << endl;
-cout << nombrenuitsejour(newreserv) << endl;
+cout << "voici le nombre de nuit votre reservation : " << nombrenuitsejour(newreserv) <<" nuit(s)" << endl << endl;
 
 
-*/
+//Question 8 : Choix d'une chambre 
 
-	//8.a,b,c) verif
+cout << "Question 8 : Choix d'une chambre :" << endl << endl;
 Date datedebut(2020,1,14);
 Date datefin(2020,1,17);
-cout << "QUESTION 8 : Verification de la disponibilite d'une chambre (sur une periode donnee dans un hotel donne) : " << endl;
+cout << "Verification de la disponibilite d'une chambre (sur une periode precise dans un hotel precis) : " << endl;
 Chambre chambreQ8 = chambredisponible(datedebut,datefin,hotel);
-cout << chambreQ8 << endl;
-	
-   //9a,b,c) verif
+cout << "Verification de l'attribution de la chambre : " << endl;
+cout << "La chambre de type \"" << chambreQ8.gettype() << "\" a bien ete reservee " << endl << endl;
 
+//Question 9 : Choix du client 
+
+cout << "Question 9 : Choix du client :" << endl << endl;
 Client c1 = afficherclient(listClient);
-cout <<"le client selectionne est : "<< c1 << endl;
+cout <<"le client selectionne est : "<< c1 << endl << endl;
 
-	//10
-	Date datedebut1(2021,1,1);
-	Date datedebut2(2021,2,1);
-	Date datedebut3(2021,3,1); 
-	Date datedebut4(2021,4,1);
-	Date datedebut5(2021,5,1);
-	Date datefin1(2021,1,3);
-	Date datefin2(2021,2,3);
-	Date datefin3(2021,3,3);
-	Date datefin4(2021,4,3);
-	Date datefin5(2021,5,3);
-	
-	reservation reserv10(1,datedebut1,datefin1,hotel,ChambreDouble1,client1);
-	reservation reserv20(2,datedebut2,datefin2,hotel,ChambreSimple2,client2);
-	reservation reserv30(3,datedebut3,datefin3,hotel,ChambreSuite2,client3);
-	reservation reserv40(4,datedebut4,datefin4,hotel,ChambreSimple3,client3); //Deux reservation pour le client numero 3 
-	vector<reservation> listreservation;
-	listreservation.push_back(reserv10);
-	listreservation.push_back(reserv20);
-	listreservation.push_back(reserv30);
-	listreservation.push_back(reserv40);
+//Question 10 : Validation de la réservation
 
-	cout << "Montant de la reservation n°10 "<<reserv10.montantsejour() << endl; // calculer le prix exact du sejour a)
-	cout << "Test de l'affichage de la reservation : "<< reserv10 << endl; //afficher la nouvelle reservation  b)
+//creation de 4 reservations 
+Date datedebut1(2021,1,1);
+Date datedebut2(2021,2,1);
+Date datedebut3(2021,3,1); 
+Date datedebut4(2021,4,1);
+Date datedebut5(2021,5,1);
+Date datefin1(2021,1,3);
+Date datefin2(2021,2,3);
+Date datefin3(2021,3,3);
+Date datefin4(2021,4,3);
+Date datefin5(2021,5,3);
+reservation reserv10(1,datedebut1,datefin1,hotel,ChambreDouble1,client10);
+reservation reserv20(2,datedebut2,datefin2,hotel,ChambreSimple2,client11);
+reservation reserv30(3,datedebut3,datefin3,hotel,ChambreSuite2,client12);
+reservation reserv40(4,datedebut4,datefin4,hotel,ChambreSimple3,client12); //Deux reservation pour le client numero 3 
+vector<reservation> listreservation2;
+//b)
+listreservation2.push_back(reserv10);
+listreservation2.push_back(reserv20);
+listreservation2.push_back(reserv30);
+listreservation2.push_back(reserv40);
 
-	//11)a
-	cout << "liste des reservations : " << endl; 
-	afficherreservation(listreservation);
-	//11)b
-	cout << "affichage de la reservation qui possede l'id n'2 :" << endl;
-	afficherreservation(listreservation,2);
-	//11)c
-	cout << "voici la liste des reservation faite par le client posssedant l'identifiant n'3 : " << endl;
-	afficherreservationclient(listreservation,3);
-	cout << "choix du client afin d'afficher sa liste de de reservation " << endl;
-	Client c11 = afficherclient(listClient); // Choix du client
-	afficherreservationclient(listreservation,c11);	//Affichage de sa liste de reservation 	 
-	//11)d
-	modifierreservation(listreservation,listClient,ListChambre);
-	//11)e
-	
-	/*
-	annulerreservation(listreservation);
-	cout << "verfication de l'annulation de la reservation " << endl;
-	for(int i=0; i<listreservation.size(); i++)
-	{
-		cout << listreservation[i] <<endl;
-	}
-	*/
+cout << "Question 10 : Validation de la reservation" << endl << endl;
+//a)
+cout << "Montant de la reservation n'1 : "<< reserv10.montantsejour() <<" Euros. "<<endl; 
+//b)
+cout << "Test de l'affichage de la reservation (situe dans le tableau de reservation en premiere position )  : "<< endl << listreservation2[0] << endl << endl; //afficher la nouvelle reservation  b)
+
+
+//Question 11 : Gestion des réservations
+
+cout << "Question 11 : Gestion des reservations :" << endl << endl;
+//a)
+cout << "a) Affichage de la liste des reservations : " << endl; 
+afficherreservation(listreservation2);
+cout << endl;
+//b)
+cout << "b) affichage de la reservation qui possede l'id n'2 :" << endl;
+afficherreservation(listreservation2,2);
+cout << endl; 
+//c)
+cout << "c) voici la listes des reservations faites par le client posssedant l'identifiant n'1 : " << endl;
+afficherreservationclient(listreservation2,1);
+cout << endl <<"choix du client afin d'afficher sa liste de de reservation " << endl;
+Client c11 = afficherclient(listClient); // Choix du client
+afficherreservationclient(listreservation2,c11);	//Affichage de sa liste de reservation 	 //si par exemple on entre "nom3" on remarque que nom est associé au client 12 (Q6) et que le client 12 a bien fait deux reservation, les reservations qui possede l'id2 et 3(Q10) 
+//d)
+cout <<"d)" <<endl;
+modifierreservation(listreservation2,listClient,ListChambre);
+/*
+//11)e
+annulerreservation(listreservation);
+cout << "verfication de l'annulation de la reservation " << endl;
+for(int i=0; i<listreservation.size(); i++)
+{
+	cout << listreservation[i] <<endl;
+}
+*/
 }
 	
